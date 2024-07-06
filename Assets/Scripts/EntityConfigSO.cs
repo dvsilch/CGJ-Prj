@@ -15,6 +15,9 @@ public class EntityConfigSO : ScriptableObject
     [TextArea]
     private string entityDescription;
 
+    [SerializeField]
+    private Sprite entityIcon;
+
     public string EntityName => entityName;
 
     public string EntityDescription => entityDescription;
@@ -25,6 +28,7 @@ public class EntityConfigSO : ScriptableObject
 
 	[SerializeField]
     public SerializableDictionary<string, LvUpCondition> LvUpCondition;
+    public Sprite EntityIcon => entityIcon;
 
     public void Check(List<EntityConfigSO> list)
     {
