@@ -25,12 +25,6 @@ public class EntityBase : MonoBehaviour, IEntity
                 int lv_cap_in_this_situation = Setup.LevelSelfIncCap + Setup.LvUpCondition[m.Key].BuffVal;
                 bool reach_cap = _currLevel >= lv_cap_in_this_situation;
                 conditionSatisfied &= condition_match && !reach_cap;
-                // debug only
-                // if(Setup.Key == "A")
-                // {
-                //     if(m.Value.GetLevel() >= 4)
-                //         Debug.Log("A");
-                // }
             }
         }
 
@@ -61,7 +55,8 @@ public class EntityBase : MonoBehaviour, IEntity
         {
             _currLevel++;
             // do levelup show
-            Debug.Log(string.Format("entity {0} lvup: {1} -> {2}", GetKey(), GetLevel() - 1, GetLevel()));
+            // Debug.Log(string.Format("entity {0} lvup: {1} -> {2}", GetKey(), GetLevel() - 1, GetLevel()));
+            UIMain.Instance.ShowDebug(string.Format("entity {0} lvup: {1} -> {2}", GetKey(), GetLevel() - 1, GetLevel()));
             return true;
         }
         return false;

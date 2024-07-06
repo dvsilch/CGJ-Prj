@@ -33,7 +33,8 @@ public class EntityQueueWatcher : MonoBehaviour
     {
         Debug.Assert(!_currUserInput.ContainsKey(entity.GetKey()), string.Format("memmber key {0} already exist", entity.GetKey()));
 
-        Debug.Log(string.Format("added entity {0}", entity.GetKey()));
+        // Debug.Log(string.Format("added entity {0}", entity.GetKey()));
+        UIMain.Instance.ShowDebug(string.Format("added entity {0} -> lv1", entity.GetKey()));
 
         _currUserInput.Add(entity.GetKey(), entity);
         // _currMembers.Add(entity);
@@ -85,6 +86,7 @@ public class EntityQueueWatcher : MonoBehaviour
         _currUserInput.Clear();
         // _currMembers.Clear();
         _last = null;
+        UIMain.Instance.ShowDebug("Restarted");
     }
 
 	// member level increase if possible
@@ -119,7 +121,8 @@ public class EntityQueueWatcher : MonoBehaviour
     async UniTask PlayLvUpShow(IEntity e)
     {
         // Debug.Log("play entity level up show, 1 sec");
-        Debug.Log(string.Format("{0} lvUp: {1} -> {2}", e.GetKey(), e.GetLevel() - 1, e.GetLevel()));
+        // Debug.Log(string.Format("{0} lvUp: {1} -> {2}", e.GetKey(), e.GetLevel() - 1, e.GetLevel()));
+        UIMain.Instance.ShowDebug(string.Format("{0} lvUp: {1} -> {2}", e.GetKey(), e.GetLevel() - 1, e.GetLevel()));
         await UniTask.WaitForSeconds(1.0f);
     }
 
