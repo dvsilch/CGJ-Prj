@@ -8,7 +8,7 @@ using DG.Tweening;
 public class Manager : MonoBehaviour
 {
     private static Manager _instance = null;
-    public static Manager Instance{get{return _instance;}}
+    public static Manager Instance { get { return _instance; } }
 
     // public DragBall Player;
 
@@ -43,13 +43,14 @@ public class Manager : MonoBehaviour
     public const string ST_OV = "gameover";
 
     private int _currentEnergySet = 1;
-    public int CurrentEnergySet{get{return _currentEnergySet;}}
+    public int CurrentEnergySet { get { return _currentEnergySet; } }
 
     [SerializeField]
     private SfxSet[] _sfxSets;
     private Dictionary<string, AudioClip> _sfxDict = new Dictionary<string, AudioClip>();
 
-    private void Awake() {
+    private void Awake()
+    {
         _instance = this;
     }
 
@@ -58,8 +59,8 @@ public class Manager : MonoBehaviour
     {
         _fsm = new qbfox.FSMSystem(this);
         _fsm.AddState("menu", new Entry());
-        _fsm.AddState("tutor", new InLevel());
-        _fsm.AddState("level", new InLevel());
+        _fsm.AddState("tutor", new Tutor());
+        _fsm.AddState("level", new InLevel2());
         _fsm.AddState("gameover", new GameOver());
         _fsm.ChangeState("menu");
 
@@ -81,9 +82,9 @@ public class Manager : MonoBehaviour
 
     public void PlayAudio(string name, float pitch = 1.0f)
     {
-        if(_as == null)
+        if (_as == null)
             _as = gameObject.GetComponent<AudioSource>();
-        if(!_sfxDict.ContainsKey(name))
+        if (!_sfxDict.ContainsKey(name))
         {
             Debug.LogErrorFormat("{0} not exist", name);
             return;
@@ -138,21 +139,22 @@ public class Manager : MonoBehaviour
         StartCoroutine(PlayParticleFx_Co(ps, emitCount, emitTimes));
     }
 
-    IEnumerator PlayParticleFx_Co(ParticleSystem ps,int emCount, int times)
+    IEnumerator PlayParticleFx_Co(ParticleSystem ps, int emCount, int times)
     {
         int count = times;
-        while(count > 0)
+        while (count > 0)
         {
             ps.Emit(emCount);
             count--;
-            if(count > 0)
+            if (count > 0)
                 yield return _restoreInterval;
         }
         yield return new WaitForSeconds(0.5f);
         Destroy(ps.gameObject);
     }
 
-    private void Update() {
+    private void Update()
+    {
         _fsm.CurrentState.Run();
     }
 
@@ -186,30 +188,30 @@ public class Manager : MonoBehaviour
     // public void SetupPlayer(int lifeCharge)
     // {
     //     _currentEnergySet = lifeCharge;
-	// 	GameObject flag = GameObject.FindGameObjectWithTag("startFlag");
-	// 	Vector3 p = flag.transform.position;
-	// 	GameObject player = Reset();
-	// 	player.transform.position = new Vector3(p.x, p.y, 0);
+    // 	GameObject flag = GameObject.FindGameObjectWithTag("startFlag");
+    // 	Vector3 p = flag.transform.position;
+    // 	GameObject player = Reset();
+    // 	player.transform.position = new Vector3(p.x, p.y, 0);
     //     DragBall db = player.GetComponent<DragBall>();
     //     db.SetTrailCenter(player.transform.position);
     //     db.OnSplittedAction = OnSplitHandler;
     //     OnSplitHandler(db, false);
     // }
 
-//     void OnSplitHandler(DragBall db, bool dead)
-//     {
-//         InLevel lv = _fsm.GetState(ST_LV) as InLevel;
-//         if(dead)
-//         {
-//             db.OnSplittedAction = null;
-//             lv.AddPlayerPiece(-1);
-//         }
-//         else
-//         {
-//             db.OnSplittedAction = OnSplitHandler;
-//             lv.AddPlayerPiece(1);
-//         }
-//     }
+    //     void OnSplitHandler(DragBall db, bool dead)
+    //     {
+    //         InLevel lv = _fsm.GetState(ST_LV) as InLevel;
+    //         if(dead)
+    //         {
+    //             db.OnSplittedAction = null;
+    //             lv.AddPlayerPiece(-1);
+    //         }
+    //         else
+    //         {
+    //             db.OnSplittedAction = OnSplitHandler;
+    //             lv.AddPlayerPiece(1);
+    //         }
+    //     }
 }
 
 public class Entry : FSMState
@@ -221,7 +223,7 @@ public class Entry : FSMState
         // UIMain.Instance.ShowMainMenu();
         // UIMain.Instance.EntryClickBoard.onClick.AddListener(()=>TryChangeState());
         MarkNextState(Manager.ST_LV);
-        (m_Controller.GetState(NextStateId) as InLevel).Restart();
+        (m_Controller.GetState(NextStateId) as InLevel2).Restart();
     }
 
     public override void Deactivate()
@@ -232,6 +234,28 @@ public class Entry : FSMState
 
 public class Tutor : FSMState
 {
+}
+
+public class InLevel2 : FSMState
+{
+    private List<EntityConfigSO> entities = new List<EntityConfigSO>(5);
+
+    public void Restart()
+    {
+        entities.Clear();
+    }
+
+    public override void Activate()
+    {
+        base.Activate();
+        entities.Clear();
+    }
+
+    public override void Deactivate()
+    {
+        base.Deactivate();
+        entities.Clear();
+    }
 }
 
 public class InLevel : FSMState
@@ -299,9 +323,9 @@ public class InLevel : FSMState
     public void AddPlayerPiece(int val)
     {
         // first time unlock charging
-        if(_playerPieces == 0 && val == 1)
+        if (_playerPieces == 0 && val == 1)
             _setCharging = false;
-        this._playerPieces+=val;
+        this._playerPieces += val;
         Debug.LogFormat("player piece {0}, {1} left", val, _playerPieces);
     }
 
@@ -313,7 +337,7 @@ public class InLevel : FSMState
     public override void Deactivate()
     {
         base.Deactivate();
-        if(_currScene.path != null)
+        if (_currScene.path != null)
             SceneManager.UnloadSceneAsync(_currScene);
         // UIMain.Instance.ChargeBtn.onClick.RemoveAllListeners();
         // DragBall[] all = Object.FindObjectsOfType<DragBall>();
@@ -328,20 +352,20 @@ public class InLevel : FSMState
 
     public override void Run()
     {
-        if(!_levelLoaded)
+        if (!_levelLoaded)
             return;
 
-        if(_recollecting)
+        if (_recollecting)
             return;
 
-        if(Application.isEditor && Input.GetKeyUp(KeyCode.RightBracket))
+        if (Application.isEditor && Input.GetKeyUp(KeyCode.RightBracket))
         {
             LevelPass();
             return;
         }
 
         // next level
-        if(_playerPieces > 0 && _starCount <= 0)
+        if (_playerPieces > 0 && _starCount <= 0)
         {
             LevelPass();
             return;
@@ -349,10 +373,10 @@ public class InLevel : FSMState
 
         // UIMain.Instance.UpdateHUDStat(_energyCount, _starCount);
 
-        if(!_setCharging && _playerPieces == 0)
+        if (!_setCharging && _playerPieces == 0)
         {
             // game over
-            if(_energyCount == 0)
+            if (_energyCount == 0)
             {
                 MarkNextState(Manager.ST_OV);
                 TryChangeState();
@@ -382,7 +406,7 @@ public class InLevel : FSMState
         _currLevelIdx++;
         yield return RecollectEnergy_Co();
         yield return new WaitForSeconds(1.0f);
-        if(AllLevelComplete())
+        if (AllLevelComplete())
         {
             // all win
             MarkNextState(Manager.ST_OV);
@@ -429,7 +453,7 @@ public class InLevel : FSMState
     AsyncOperation LoadLevel(int idx)
     {
         Scene s = SceneManager.GetSceneByBuildIndex(idx);
-        Debug.LogFormat("load leve {0}:{1}",idx, s.name);
+        Debug.LogFormat("load leve {0}:{1}", idx, s.name);
         return SceneManager.LoadSceneAsync(idx, LoadSceneMode.Additive);
     }
 }
