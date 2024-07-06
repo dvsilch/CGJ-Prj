@@ -7,6 +7,8 @@ using DG.Tweening;
 using System.Threading.Tasks;
 using System;
 using Cysharp.Threading.Tasks;
+using BehaviorDesigner.Runtime.Tasks.Unity.UnityGameObject;
+using Cysharp.Threading.Tasks.Triggers;
 
 public class Manager : MonoBehaviour
 {
@@ -56,6 +58,13 @@ public class Manager : MonoBehaviour
 
 	[SerializeField]
     EntityQueueWatcher _watcher;
+    public EntityQueueWatcher Watcher{get{return _watcher;}}
+
+    [SerializeField]
+    EntityBase[] _entityPrefab;
+
+    Dictionary<string, EntityBase> _entityPrefabsByKey = new Dictionary<string, EntityBase>();
+    public Dictionary<string, EntityBase> EntityPrefabsByKey{get{return _entityPrefabsByKey;}}
 
     private void Awake()
     {
@@ -78,6 +87,11 @@ public class Manager : MonoBehaviour
             _sfxDict.Add(ss.Name, ss.Clip);
         }
 
+        foreach(EntityBase eb in _entityPrefab)
+        {
+            _entityPrefabsByKey.Add(eb.GetKey(), eb);
+        }
+
         // Player.Init();
         // _restoreInterval = new WaitForSeconds(0.05f);
 
@@ -86,6 +100,10 @@ public class Manager : MonoBehaviour
         //     ,_spawnBox.bounds.size.y * _spawnBox.transform.localScale.y
         //     ,_spawnBox.bounds.size.z * _spawnBox.transform.localScale.z)
         // );
+    }
+
+    private void Update() {
+        _fsm.CurrentState.Run();
     }
 
     public void PlayAudio(string name, float pitch = 1.0f)
@@ -159,11 +177,6 @@ public class Manager : MonoBehaviour
         }
         yield return new WaitForSeconds(0.5f);
         Destroy(ps.gameObject);
-    }
-
-    private void Update()
-    {
-        _fsm.CurrentState.Run();
     }
 
     internal async UniTask DoPlayFailed(int currTurn)
@@ -258,23 +271,43 @@ public class Tutor : FSMState
 
 public class InLevel2 : FSMState
 {
-    private List<EntityConfigSO> entities = new List<EntityConfigSO>(5);
+    // private List<EntityConfigSO> entities = new List<EntityConfigSO>(5);
+    Dictionary<string, EntityBase> _entityInstances = new Dictionary<string, EntityBase>();
 
     public void Restart()
     {
-        entities.Clear();
+        // entities.Clear();
+        Manager.Instance.Watcher.Reset();
+        foreach(EntityBase b in _entityInstances.Values)
+        {
+            GameObject.Destroy(b.gameObject);
+        }
+        _entityInstances.Clear();
+
+        foreach(EntityButton btn in UIMain.Instance.Entities.Buttons)
+            btn.Restart();
     }
 
     public override void Activate()
     {
         base.Activate();
-        entities.Clear();
+        // entities.Clear();
+
+        foreach(EntityButton btn in UIMain.Instance.Entities.Buttons)
+        {
+            btn.OnEntityClick += (so)=>{
+                IEntity e = GetOrCreateEntity(so.Key);
+
+                Manager.Instance.Watcher.NewMemeber(e);
+                // invoke entity spawn action?
+            };
+        }
     }
 
     public override void Deactivate()
     {
         base.Deactivate();
-        entities.Clear();
+        // entities.Clear();
     }
 
     public override void Run()
@@ -284,6 +317,19 @@ public class InLevel2 : FSMState
             Restart();
         }
     }
+
+    EntityBase GetOrCreateEntity(string key)
+    {
+        if(_entityInstances.ContainsKey(key) && _entityInstances[key] != null)
+           return _entityInstances[key];
+
+        // TODO: create instance if not exist
+        GameObject prefab = Manager.Instance.EntityPrefabsByKey[key].gameObject;
+        EntityBase eb = GameObject.Instantiate(prefab).GetComponent<EntityBase>(); 
+        _entityInstances.Add(eb.GetKey(), eb);
+        return eb;
+    }
+
 }
 
 public class InLevel : FSMState
@@ -302,12 +348,15 @@ public class InLevel : FSMState
 
     private bool _recollecting = false;
 
+
     public void Restart()
     {
         _currLevelIdx = 1;
         _energyCount = 10;
         _playerPieces = 0;
         _starCount = 0;
+
+        // TODO: clear all instances
     }
 
     public override void Activate()
@@ -346,21 +395,28 @@ public class InLevel : FSMState
 
         //     _levelLoaded = true;
         // };
+
     }
 
-    public void AddPlayerPiece(int val)
+
+    // public void AddPlayerPiece(int val)
+    // {
+    //     // first time unlock charging
+    //     if (_playerPieces == 0 && val == 1)
+    //         _setCharging = false;
+    //     this._playerPieces += val;
+    //     Debug.LogFormat("player piece {0}, {1} left", val, _playerPieces);
+    // }
+
+    public void NewEntity(string key)
     {
-        // first time unlock charging
-        if (_playerPieces == 0 && val == 1)
-            _setCharging = false;
-        this._playerPieces += val;
-        Debug.LogFormat("player piece {0}, {1} left", val, _playerPieces);
+        
     }
 
-    public void CollectStar()
-    {
-        _starCount--;
-    }
+    // public void CollectStar()
+    // {
+    //     _starCount--;
+    // }
 
     public override void Deactivate()
     {

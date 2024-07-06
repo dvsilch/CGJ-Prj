@@ -14,3 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   entityName: sfashsjgjd
   entityDescription: sdssssssss
+  entityIcon: {fileID: 0}
+  LevelSelfIncCap: 3
+  Key: A
+  LvUpCondition:
+    dictionaryList: []

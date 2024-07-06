@@ -946,6 +946,7 @@ GameObject:
   m_Component:
   - component: {fileID: 324210365}
   - component: {fileID: 324210366}
+  - component: {fileID: 324210367}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -981,6 +982,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _sfxSets: []
+  _watcher: {fileID: 324210367}
+  _entityPrefab:
+  - {fileID: 8010844411053615184, guid: 2f3be1ed7a7e05442bc7e355707717a8, type: 3}
+  - {fileID: 8010844411053615184, guid: 08865495af56f1d4da5958cdba535de5, type: 3}
+  - {fileID: 8010844411053615184, guid: f8b4c77ce74ccea478c62aa6f4b1a195, type: 3}
+  - {fileID: 8010844411053615184, guid: c38c178c4d5d5bc41be2873b05160fe6, type: 3}
+  - {fileID: 8010844411053615184, guid: 88cf0e374fe6b844da13203f2a0c317a, type: 3}
+--- !u!114 &324210367
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 324210364}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06abf98bb3a6b8b4f8958b18cf4a57fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _checkRules:
+    dictionaryList: []
+  TurnEnd: 8
 --- !u!1 &404356271
 GameObject:
   m_ObjectHideFlags: 0
@@ -2059,6 +2082,7 @@ GameObject:
   - component: {fileID: 1397698498}
   - component: {fileID: 1397698497}
   - component: {fileID: 1397698496}
+  - component: {fileID: 1397698500}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -2143,6 +2167,7 @@ RectTransform:
   m_Children:
   - {fileID: 1233865838}
   - {fileID: 2110522268}
+  - {fileID: 233783303}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -2150,6 +2175,21 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1397698500
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1397698495}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff25d9dcf1b309047b00b9d45b4b407a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _entities: {fileID: 1233865841}
+  _resetBtn: {fileID: 2110522272}
+  DebugText: {fileID: 233783304}
 --- !u!1001 &1408046181
 PrefabInstance:
   m_ObjectHideFlags: 0
