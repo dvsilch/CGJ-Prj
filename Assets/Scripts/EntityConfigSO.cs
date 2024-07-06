@@ -15,4 +15,10 @@ public class EntityConfigSO : ScriptableObject
     public string EntityName => entityName;
 
     public string EntityDescription => entityDescription;
+
+    public void Check(List<EntityConfigSO> list)
+    {
+        if (!list.Contains(this))
+            return;
+    }
 }
