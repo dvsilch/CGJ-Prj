@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -19,11 +20,24 @@ public class EntityConfigSO : ScriptableObject
 
     public string EntityDescription => entityDescription;
 
+	// props
+    public int Level = 1;
+    public int LevelSelfIncCap = 3;
+    public string Key = "NotSet";
+
+	[SerializeField]
+    public Dictionary<string, int> LvUpCondition;
+
     public Sprite EntityIcon => entityIcon;
 
     public void Check(List<EntityConfigSO> list)
     {
         if (!list.Contains(this))
             return;
+    }
+
+    internal bool CanLvUp()
+    {
+        throw new NotImplementedException();
     }
 }
