@@ -45,6 +45,8 @@ public class Manager : MonoBehaviour
     private int _currentEnergySet = 1;
     public int CurrentEnergySet { get { return _currentEnergySet; } }
 
+    public FSMSystem FSM => _fsm;
+
     [SerializeField]
     private SfxSet[] _sfxSets;
     private Dictionary<string, AudioClip> _sfxDict = new Dictionary<string, AudioClip>();
@@ -58,11 +60,11 @@ public class Manager : MonoBehaviour
     void Start()
     {
         _fsm = new qbfox.FSMSystem(this);
-        _fsm.AddState("menu", new Entry());
-        _fsm.AddState("tutor", new Tutor());
+        //_fsm.AddState("menu", new Entry());
+        //_fsm.AddState("tutor", new Tutor());
         _fsm.AddState("level", new InLevel2());
         _fsm.AddState("gameover", new GameOver());
-        _fsm.ChangeState("menu");
+        _fsm.ChangeState("level");
 
         // init sfx
         foreach (SfxSet ss in _sfxSets)
@@ -255,6 +257,14 @@ public class InLevel2 : FSMState
     {
         base.Deactivate();
         entities.Clear();
+    }
+
+    public override void Run()
+    {
+        if (Application.isEditor && Input.GetKey(KeyCode.R))
+        {
+            Restart();
+        }
     }
 }
 
