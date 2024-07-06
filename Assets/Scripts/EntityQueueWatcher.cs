@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Sirenix.OdinInspector.Editor;
 using UnityEngine;
+using UnityEngine.TestTools;
 
 public class EntityQueueWatcher : MonoBehaviour
 {
@@ -9,7 +11,10 @@ public class EntityQueueWatcher : MonoBehaviour
     IEntity _last;
 
     [SerializeField]
-    TurnSet _turnSet;
+    TurnConfigSO _turnCfg;
+
+	[SerializeField]
+    WinCheck _checkRule;
 
     int _currTurn = 0;
 
@@ -24,7 +29,10 @@ public class EntityQueueWatcher : MonoBehaviour
 
     void CheckTurn()
     {
+        foreach(IEntity e in _currUserInput)
+        {
 
+        }
     }
 
 	// member level increase if possible
@@ -47,5 +55,28 @@ public class EntityQueueWatcher : MonoBehaviour
     string DoRelationCheck(IEntity left, IEntity right)
     {
         return string.Format("{0}2{1}", left.GetKey() , right.GetKey());
+    }
+}
+
+[System.Serializable]
+public class WinCheck
+{
+    public static Dictionary<string, int> Condition = new Dictionary<string, int>(){
+        {"A", 4},
+        {"B", 4},
+        {"C", 4},
+        {"D", 4},
+        {"E", 4},
+    };
+
+    public static bool Check(List<IEntity> entities)
+    {
+        foreach(IEntity e in entities)
+        {
+            Debug.Assert(Condition.ContainsKey(e.GetKey()), string.Format("entity key {0} not included in winning condition set"));
+            if(e.GetLevel() < Condition[e.GetKey()])
+                return false;
+        }
+        return true;
     }
 }

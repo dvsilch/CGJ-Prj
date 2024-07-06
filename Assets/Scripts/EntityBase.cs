@@ -5,9 +5,17 @@ using UnityEngine;
 public class EntityBase : MonoBehaviour, IEntity
 {
     [SerializeField]
-    EntitySet Setup;
+    EntityConfigSO Setup;
 
     int _currLevel = 1;
+
+    public bool CanLevelUp(Dictionary<string, int> currMembers)
+    {
+        if(_currLevel < Setup.LevelSelfIncCap)
+            return true;
+        return Setup.CanLvUp();
+        throw new System.NotImplementedException();
+    }
 
     public void DoThingsWhenSpawn()
     {
@@ -16,7 +24,7 @@ public class EntityBase : MonoBehaviour, IEntity
 
     public string GetKey()
     {
-        throw new System.NotImplementedException();
+        return Setup.Key;
     }
 
     public int GetLevel()
@@ -40,4 +48,6 @@ public interface IEntity
     public string GetKey();
     public int GetLevel();
     public bool LevelUp(bool ignoreLimit);      // return true if increased
+
+    public bool CanLevelUp(Dictionary<string, int> currMembers);
 }
