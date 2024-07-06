@@ -9,12 +9,34 @@ public class EntityBase : MonoBehaviour, IEntity
 
     int _currLevel = 1;
 
-    public bool CanLevelUp(Dictionary<string, int> currMembers)
+    bool CanLevelUp(Dictionary<string, IEntity> currMembers)
     {
         if(_currLevel < Setup.LevelSelfIncCap)
             return true;
-        return Setup.CanLvUp();
-        throw new System.NotImplementedException();
+        bool conditionSatisfied = true;
+        bool foundKey = false;
+        foreach(KeyValuePair<string, IEntity> m in currMembers)
+        {
+            // 若当前场景内升级条件满足此实体的升级条件，则true
+            if(Setup.LvUpCondition.ContainsKey(m.Key))
+            {
+                foundKey |= true;
+                bool condition_match = Setup.LvUpCondition[m.Key].CheckEntityLevel >= m.Value.GetLevel();
+                int lv_cap_in_this_situation = Setup.LevelSelfIncCap + Setup.LvUpCondition[m.Key].BuffVal;
+                bool reach_cap = _currLevel >= lv_cap_in_this_situation;
+                conditionSatisfied &= condition_match && !reach_cap;
+                // debug only
+                // if(Setup.Key == "A")
+                // {
+                //     if(m.Value.GetLevel() >= 4)
+                //         Debug.Log("A");
+                // }
+            }
+        }
+
+        return foundKey && conditionSatisfied;
+
+        // throw new System.NotImplementedException();
     }
 
     public void DoThingsWhenSpawn()
@@ -24,6 +46,7 @@ public class EntityBase : MonoBehaviour, IEntity
 
     public string GetKey()
     {
+        Debug.Assert(Setup.Key != "NotSet", "entity key not set");
         return Setup.Key;
     }
 
@@ -32,13 +55,16 @@ public class EntityBase : MonoBehaviour, IEntity
         return _currLevel;
     }
 
-    public bool LevelUp(bool ignoreLimit)
+    public bool LevelUp(Dictionary<string, IEntity> currMember)
     {
-        int before = _currLevel;
-        _currLevel++;
-        if(!ignoreLimit)
-            _currLevel = Mathf.Min(Setup.LevelSelfIncCap);
-        return before < _currLevel;
+        if(CanLevelUp(currMember))
+        {
+            _currLevel++;
+            // do levelup show
+            Debug.Log(string.Format("entity {0} lvup: {1} -> {2}", GetKey(), GetLevel() - 1, GetLevel()));
+            return true;
+        }
+        return false;
     }
 }
 
@@ -47,7 +73,5 @@ public interface IEntity
     public void DoThingsWhenSpawn();
     public string GetKey();
     public int GetLevel();
-    public bool LevelUp(bool ignoreLimit);      // return true if increased
-
-    public bool CanLevelUp(Dictionary<string, int> currMembers);
+    public bool LevelUp(Dictionary<string, IEntity> currMember);      // return true if increased
 }
