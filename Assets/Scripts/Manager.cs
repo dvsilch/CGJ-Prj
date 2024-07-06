@@ -4,6 +4,9 @@ using qbfox;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using DG.Tweening;
+using System.Threading.Tasks;
+using System;
+using Cysharp.Threading.Tasks;
 
 public class Manager : MonoBehaviour
 {
@@ -48,6 +51,9 @@ public class Manager : MonoBehaviour
     [SerializeField]
     private SfxSet[] _sfxSets;
     private Dictionary<string, AudioClip> _sfxDict = new Dictionary<string, AudioClip>();
+
+	[SerializeField]
+    EntityQueueWatcher _watcher;
 
     private void Awake()
     {
@@ -156,6 +162,18 @@ public class Manager : MonoBehaviour
     private void Update()
     {
         _fsm.CurrentState.Run();
+    }
+
+    internal async UniTask DoPlayFailed(int currTurn)
+    {
+        Debug.Log("DoPlayFailed 1 secs..");
+        await UniTask.WaitForSeconds(3.0f);
+    }
+
+    internal async UniTask DoPlaySuccess()
+    {
+        Debug.Log("DoPlaySuccess 1 secs..");
+        await UniTask.WaitForSeconds(1.0f);
     }
 
     // public int GetIndexByQuantity(int val)

@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using ProjectTools;
+using Sirenix.Serialization;
 
 [CreateAssetMenu(fileName = "EntityConfigSO", menuName = "Entity Config")]
 public class EntityConfigSO : ScriptableObject
@@ -18,21 +20,23 @@ public class EntityConfigSO : ScriptableObject
     public string EntityDescription => entityDescription;
 
 	// props
-    public int Level = 1;
     public int LevelSelfIncCap = 3;
     public string Key = "NotSet";
 
 	[SerializeField]
-    public Dictionary<string, int> LvUpCondition;
+    public SerializableDictionary<string, LvUpCondition> LvUpCondition;
 
     public void Check(List<EntityConfigSO> list)
     {
         if (!list.Contains(this))
             return;
     }
+}
 
-    internal bool CanLvUp()
-    {
-        throw new NotImplementedException();
-    }
+
+[System.Serializable]
+public class LvUpCondition
+{
+    public int CheckEntityLevel;    // 检查对应目标实体的级别是否满足要求
+    public int BuffVal;         // 能增长几级
 }
