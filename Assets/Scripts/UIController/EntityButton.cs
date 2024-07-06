@@ -66,6 +66,7 @@ public class EntityButton : MonoBehaviour
             suffix.text = clickCount.ToString();
             suffixContainer.SetActive(true);
             OnEntityClick?.Invoke(entityConfig);
+            button.interactable = false;
         }
     }
 
@@ -74,6 +75,7 @@ public class EntityButton : MonoBehaviour
         clickCount = 0;
         suffix.text = "";
         suffixContainer.SetActive(false);
+        button.interactable = true;
     }
 
     private void OnPointerEnter(BaseEventData eventData)
