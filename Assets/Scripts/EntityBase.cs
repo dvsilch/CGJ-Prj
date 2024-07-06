@@ -4,8 +4,29 @@ using UnityEngine;
 
 public class EntityBase : MonoBehaviour, IEntity
 {
+    [System.Flags]
+    public enum TransitionType
+    {
+        ModelShow = 1 << 0,
+        ModelScale = 1 << 1,
+    }
+
+    public class TransitionData
+    {
+        public TransitionType type;
+
+        public GameObject model;
+
+        public float scale;
+
+        public float duration;
+    }
+
     [SerializeField]
     EntityConfigSO Setup;
+
+    [SerializeField]
+    private List<TransitionData> transitionDatas;
 
     int _currLevel = 1;
 

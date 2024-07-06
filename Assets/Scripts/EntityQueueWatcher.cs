@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using ProjectTools;
@@ -25,11 +26,11 @@ public class EntityQueueWatcher : MonoBehaviour
     // List<IEntity> _currMembers = new List<IEntity>();
     IEntity _last;
 
-    int _currTurn = 0;
+    public int _currTurn = 0;
 
     List<IEntity> _member_to_play_lvup = new List<IEntity>();
 
-    public void NewMemeber(IEntity entity)
+    public async UniTask NewMemeber(IEntity entity, CancellationToken cancellationToken = default)
     {
         Debug.Assert(!_currUserInput.ContainsKey(entity.GetKey()), string.Format("memmber key {0} already exist", entity.GetKey()));
 
@@ -44,7 +45,7 @@ public class EntityQueueWatcher : MonoBehaviour
         _member_to_play_lvup.Clear();
         CheckMember();
 
-        // PlayMemberLvUp();
+        await PlayMemberLvUp(cancellationToken).AttachExternalCancellation(cancellationToken);
 
         Debug.Assert(_currTurn < TurnEnd, "当前回合数不应高于最大回合数");
         _currTurn++;
@@ -70,14 +71,14 @@ public class EntityQueueWatcher : MonoBehaviour
         }
     }
 
-    private async Task PlayMemberLvUp()
+    private async UniTask PlayMemberLvUp(CancellationToken cancellationToken = default)
     {
         foreach(IEntity e in _member_to_play_lvup)
         {
             await PlayLvUpShow(e);
             // other fx?
             Debug.Log("play other fx lvup related? 1 sec");
-            await UniTask.WaitForSeconds(1.0f);
+            await UniTask.WaitForSeconds(1.0f, cancellationToken: cancellationToken);
         }
     }
 
@@ -87,6 +88,7 @@ public class EntityQueueWatcher : MonoBehaviour
         // _currMembers.Clear();
         _last = null;
         UIMain.Instance.ShowDebug("Restarted");
+        _currTurn = 0;
     }
 
 	// member level increase if possible

@@ -9,6 +9,7 @@ using System;
 using Cysharp.Threading.Tasks;
 using BehaviorDesigner.Runtime.Tasks.Unity.UnityGameObject;
 using Cysharp.Threading.Tasks.Triggers;
+using System.Threading;
 
 public class Manager : MonoBehaviour
 {
@@ -271,11 +272,23 @@ public class Tutor : FSMState
 
 public class InLevel2 : FSMState
 {
+    public CancellationTokenSource cts;
+
     // private List<EntityConfigSO> entities = new List<EntityConfigSO>(5);
     Dictionary<string, EntityBase> _entityInstances = new Dictionary<string, EntityBase>();
 
+    public bool LvUpCompleted { get; private set; } = true;
+
+    public void InitCts()
+    {
+        cts?.Cancel();
+        cts = new CancellationTokenSource();
+    }
+
     public void Restart()
     {
+        InitCts();
+        LvUpCompleted = true;
         // entities.Clear();
         Manager.Instance.Watcher.Reset();
         foreach(EntityBase b in _entityInstances.Values)
@@ -290,17 +303,39 @@ public class InLevel2 : FSMState
 
     public override void Activate()
     {
+        InitCts();
+        LvUpCompleted = true;
         base.Activate();
         // entities.Clear();
 
         foreach(EntityButton btn in UIMain.Instance.Entities.Buttons)
         {
-            btn.OnEntityClick += (so)=>{
+            if (btn.isReigistered) return;
+            btn.OnEntityClick += async (so)=>{
                 IEntity e = GetOrCreateEntity(so.Key);
 
-                Manager.Instance.Watcher.NewMemeber(e);
+                LvUpCompleted = false;
+                foreach (EntityButton b in UIMain.Instance.Entities.Buttons)
+                {
+                    b.SetButtonInteractable(false);
+                }
+                var isCanceled = await Manager.Instance.Watcher.NewMemeber(e, cts.Token)
+                    .AttachExternalCancellation(cts.Token)
+                    .SuppressCancellationThrow();
+
+                if (isCanceled)
+                {
+                    Debug.LogWarning("NewMemeber canceled");
+                    return;
+                }
+                LvUpCompleted = true;
+                foreach (EntityButton b in UIMain.Instance.Entities.Buttons)
+                {
+                    b.SetButtonInteractable(true);
+                }
                 // invoke entity spawn action?
             };
+            btn.isReigistered = true;
         }
     }
 
