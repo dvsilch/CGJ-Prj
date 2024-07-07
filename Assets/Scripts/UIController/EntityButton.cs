@@ -7,8 +7,6 @@ using UnityEngine.UI;
 
 public class EntityButton : MonoBehaviour
 {
-    private static int clickCount = 0; // TODO: get clicked index from the manager
-
     [SerializeField]
     private EventTrigger eventTrigger;
 
@@ -27,11 +25,15 @@ public class EntityButton : MonoBehaviour
     [SerializeField]
     private GameObject suffixContainer;
 
+    public bool IsClicked { get; private set; } = false;
+
     public event Action<EntityConfigSO> OnEntityPointerEnter;
 
     public event Action<EntityConfigSO> OnEntityPointerExit;
 
     public event Action<EntityConfigSO> OnEntityClick;
+
+    public bool isReigistered;
 
     // Start is called before the first frame update
     void Start()
@@ -60,22 +62,27 @@ public class EntityButton : MonoBehaviour
 
     private void OnClick()
     {
-        if (true) // TODO: Add condition
+        if (Manager.Instance.FSM.CurrentState is InLevel2 level && level.LvUpCompleted)
         {
-            clickCount++;
-            suffix.text = clickCount.ToString();
+            IsClicked = true;
+            suffix.text = (Manager.Instance.Watcher._currTurn + 1).ToString();
             suffixContainer.SetActive(true);
             OnEntityClick?.Invoke(entityConfig);
             button.interactable = false;
         }
     }
 
+    public void SetButtonInteractable(bool interactable)
+    {
+        button.interactable = !IsClicked && interactable;
+    }
+
     public void Restart()
     {
-        clickCount = 0;
         suffix.text = "";
         suffixContainer.SetActive(false);
         button.interactable = true;
+        IsClicked = false;
     }
 
     private void OnPointerEnter(BaseEventData eventData)

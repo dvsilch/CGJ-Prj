@@ -7,6 +7,7 @@ public class ButtonsGroup : MonoBehaviour
 {
     [SerializeField]
     private List<EntityButton> buttons;
+    public List<EntityButton> Buttons{get{return buttons;}}
 
     [SerializeField]
     private Image entityIcon;
