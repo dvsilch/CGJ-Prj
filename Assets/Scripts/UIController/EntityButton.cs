@@ -111,6 +111,7 @@ public class EntityButton : MonoBehaviour
 
     private void OnPointerEnter(BaseEventData eventData)
     {
+        tip.gameObject.SetActive(true);
         if (!IsClicked)
             HoverBtnFx();
         OnEntityPointerEnter?.Invoke(entityConfig);
@@ -118,6 +119,7 @@ public class EntityButton : MonoBehaviour
 
     private void OnPointerExit(BaseEventData eventData)
     {
+        tip.gameObject.SetActive(false);
         ExitBtnFx();
         OnEntityPointerExit?.Invoke(entityConfig);
     }
