@@ -1270,7 +1270,7 @@ PrefabInstance:
       objectReference: {fileID: 971081491, guid: 7dd72dc1ed1e0fe4c85629a4da97297e, type: 3}
     - target: {fileID: 6693930514962424602, guid: 287e26db9be8bef4bb30273e55a18f7e, type: 3}
       propertyPath: m_Name
-      value: ButtonContainer (1)
+      value: Button B
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1395,7 +1395,7 @@ PrefabInstance:
       objectReference: {fileID: 1466206679, guid: 7dd72dc1ed1e0fe4c85629a4da97297e, type: 3}
     - target: {fileID: 6693930514962424602, guid: 287e26db9be8bef4bb30273e55a18f7e, type: 3}
       propertyPath: m_Name
-      value: ButtonContainer (3)
+      value: Button D
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1520,7 +1520,7 @@ PrefabInstance:
       objectReference: {fileID: -1280221349, guid: 7dd72dc1ed1e0fe4c85629a4da97297e, type: 3}
     - target: {fileID: 6693930514962424602, guid: 287e26db9be8bef4bb30273e55a18f7e, type: 3}
       propertyPath: m_Name
-      value: ButtonContainer
+      value: Button A
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1645,7 +1645,7 @@ PrefabInstance:
       objectReference: {fileID: 27884809, guid: 7dd72dc1ed1e0fe4c85629a4da97297e, type: 3}
     - target: {fileID: 6693930514962424602, guid: 287e26db9be8bef4bb30273e55a18f7e, type: 3}
       propertyPath: m_Name
-      value: ButtonContainer (2)
+      value: Button C
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1770,7 +1770,7 @@ PrefabInstance:
       objectReference: {fileID: 21300000, guid: b903505a46e6e674ba812f8a630358e2, type: 3}
     - target: {fileID: 6693930514962424602, guid: 287e26db9be8bef4bb30273e55a18f7e, type: 3}
       propertyPath: m_Name
-      value: ButtonContainer (4)
+      value: Button E
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
