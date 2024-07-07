@@ -1,5 +1,8 @@
+using Cysharp.Threading.Tasks;
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
 public class EntityBase : MonoBehaviour, IEntity
@@ -11,15 +14,16 @@ public class EntityBase : MonoBehaviour, IEntity
         ModelScale = 1 << 1,
     }
 
+    [System.Serializable]
     public class TransitionData
     {
-        public TransitionType type;
+        public TransitionType type = TransitionType.ModelScale;
 
         public GameObject model;
 
-        public float scale;
+        public float scale = 1f;
 
-        public float duration;
+        public float duration = 1f;
     }
 
     [SerializeField]
@@ -82,6 +86,34 @@ public class EntityBase : MonoBehaviour, IEntity
         }
         return false;
     }
+
+    public async UniTask PlayLevelUpAnimation(CancellationToken cancellationToken)
+    {
+        if (transitionDatas == null || transitionDatas.Count <= _currLevel - 1)
+            return;
+
+        TransitionData data = transitionDatas[_currLevel - 1];
+
+        if (data?.model == null)
+        {
+            UIMain.Instance.ShowDebug("model not set");
+            Debug.LogError("model not set", gameObject);
+            return;
+        }
+
+        if (data.type.HasFlag(TransitionType.ModelShow))
+        {
+            data.model.SetActive(true);
+        }
+
+        if (data.type.HasFlag(TransitionType.ModelScale))
+        {
+            await data.model.transform.DOScale(data.scale, data.duration).ToUniTask(cancellationToken: cancellationToken);
+
+            UIMain.Instance.ShowDebug("level up animation done");
+            Debug.Log("level up animation done", data.model);
+        }
+    }
 }
 
 public interface IEntity
@@ -90,4 +122,5 @@ public interface IEntity
     public string GetKey();
     public int GetLevel();
     public bool LevelUp(Dictionary<string, IEntity> currMember);      // return true if increased
+    public UniTask PlayLevelUpAnimation(CancellationToken cancellationToken);
 }

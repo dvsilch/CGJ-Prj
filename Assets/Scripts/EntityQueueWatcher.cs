@@ -75,10 +75,10 @@ public class EntityQueueWatcher : MonoBehaviour
     {
         foreach(IEntity e in _member_to_play_lvup)
         {
-            await PlayLvUpShow(e);
             // other fx?
             Debug.Log("play other fx lvup related? 1 sec");
-            await UniTask.WaitForSeconds(1.0f, cancellationToken: cancellationToken);
+            await UniTask.WhenAll(UniTask.WaitForSeconds(1.0f, cancellationToken: cancellationToken), PlayLvUpShow(e, cancellationToken))
+                .AttachExternalCancellation(cancellationToken);
         }
     }
 
@@ -120,12 +120,12 @@ public class EntityQueueWatcher : MonoBehaviour
 
     }
 
-    async UniTask PlayLvUpShow(IEntity e)
+    async UniTask PlayLvUpShow(IEntity e, CancellationToken cancellationToken)
     {
         // Debug.Log("play entity level up show, 1 sec");
         // Debug.Log(string.Format("{0} lvUp: {1} -> {2}", e.GetKey(), e.GetLevel() - 1, e.GetLevel()));
         UIMain.Instance.ShowDebug(string.Format("{0} lvUp: {1} -> {2}", e.GetKey(), e.GetLevel() - 1, e.GetLevel()));
-        await UniTask.WaitForSeconds(1.0f);
+        await e.PlayLevelUpAnimation(cancellationToken).AttachExternalCancellation(cancellationToken);
     }
 
 //     string DoRelationCheck(IEntity left, IEntity right)
