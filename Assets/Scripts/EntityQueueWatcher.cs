@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
+using DG.Tweening;
 using ProjectTools;
 using UnityEngine;
 //using UnityEngine.Rendering;
@@ -57,13 +58,26 @@ public class EntityQueueWatcher : MonoBehaviour
         if (_checkRules.ContainsKey(_currTurn))
         {
             // 回合判定
-            bool passed = _checkRules[_currTurn].Check(_currUserInput.Values);
-            if (!passed)
+            bool passed = _checkRules[_currTurn].Check(_currUserInput);
+            string key_to_play = passed
+                 ? _checkRules[_currTurn].AnimationTriggerPassed
+                  : _checkRules[_currTurn].AnimationTriggerFailed;
+
+            if(!string.IsNullOrEmpty(key_to_play))
             {
                 // 提前结束？
-                // await Manager.Instance.DoPlayFailed(_currTurn);
-                Manager.Instance.FSM.ChangeState("game over");
-                return;
+                await Manager.Instance.DoPlayAnim(key_to_play, ()=>{
+                    Manager.Instance.AnimCtrl.Despawn(key_to_play);
+                });
+            }
+
+			// 判定失败惩罚
+            if(!passed)
+            {
+                foreach(KeyValuePair<string, int> pair in _checkRules[_currTurn].DoApplyWhenFailed)
+                {
+                    await ApplyPunishment(pair.Key, pair.Value);
+                }
             }
 
             // 最终回合
@@ -84,6 +98,12 @@ public class EntityQueueWatcher : MonoBehaviour
             UIMain.Instance.ShowGameOver(ResultText);
 
         }
+    }
+
+    private Sequence ApplyPunishment(string key, int value)
+    {
+        int origin_lv = _currUserInput[key].GetLevel();
+        return _currUserInput[key].UpdateForce(value, true);
     }
 
     private async UniTask PlayMemberLvUp(CancellationToken cancellationToken = default)
@@ -161,14 +181,21 @@ public class WinCheck
         {"E", 4},
     };
 
-    public bool Check(IEnumerable<IEntity> entities)
+    public bool Check(Dictionary<string, IEntity> userInput)
     {
-        foreach (IEntity e in entities)
+        foreach(KeyValuePair<string ,int> pair in Condition)
         {
-            Debug.Assert(Condition.ContainsKey(e.GetKey()), string.Format("entity key {0} not included in winning condition set", e.GetKey()));
-            if (e.GetLevel() < Condition[e.GetKey()])
+            if(!userInput.ContainsKey(pair.Key))
+                return false;
+            IEntity e = userInput[pair.Key];
+            if(e.GetLevel() < Condition[e.GetKey()])
                 return false;
         }
         return true;
     }
+
+    public string AnimationTriggerPassed = "";
+    public string AnimationTriggerFailed = "";
+
+    public SerializableDictionary<string, int> DoApplyWhenFailed;
 }

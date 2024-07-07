@@ -31,6 +31,10 @@ public class Manager : MonoBehaviour
 
     private qbfox.FSMSystem _fsm;
 
+	[SerializeField]
+    StandaloneAnim _animCtrl;
+    public StandaloneAnim AnimCtrl => _animCtrl;
+
     // [SerializeField]
     // private ParticleSystem _restoreFxPrefab;
     // [SerializeField]
@@ -185,17 +189,16 @@ public class Manager : MonoBehaviour
         Destroy(ps.gameObject);
     }
 
-    internal async UniTask DoPlayFailed(int currTurn)
+    internal async UniTask DoPlayAnim(string key, System.Action onComplete)
     {
-        Debug.Log("DoPlayFailed 1 secs..");
-        await UniTask.WaitForSeconds(3.0f);
+        // Debug.Log("DoPlayFailed 1 secs..");
+
+        float duration = _animCtrl.Play(key);
+        Debug.Assert(duration > 0f);
+        await UniTask.WaitForSeconds(duration);
+        onComplete.Invoke();
     }
 
-    internal async UniTask DoPlaySuccess()
-    {
-        Debug.Log("DoPlaySuccess 1 secs..");
-        await UniTask.WaitForSeconds(1.0f);
-    }
 
     // public int GetIndexByQuantity(int val)
     // {
