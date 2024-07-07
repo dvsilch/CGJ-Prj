@@ -295,6 +295,7 @@ public class InLevel2 : FSMState
 
     public void Restart()
     {
+        UIMain.Instance.HideGameOver();
         InitCts();
         LvUpCompleted = true;
         // entities.Clear();

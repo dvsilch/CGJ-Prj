@@ -46,4 +46,9 @@ public class UIMain : MonoBehaviour
         gameoverModal.SetActive(true);
         gameoverText.text = text;
     }
+
+    public void HideGameOver()
+    {
+        gameoverModal.SetActive(false);
+    }
 }
