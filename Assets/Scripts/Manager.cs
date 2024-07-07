@@ -64,6 +64,11 @@ public class Manager : MonoBehaviour
     [SerializeField]
     EntityBase[] _entityPrefab;
 
+    [SerializeField]
+    private Transform entitiesLayer;
+
+    public Transform EntitiesLayer => entitiesLayer;
+
     Dictionary<string, EntityBase> _entityPrefabsByKey = new Dictionary<string, EntityBase>();
     public Dictionary<string, EntityBase> EntityPrefabsByKey{get{return _entityPrefabsByKey;}}
 
@@ -360,7 +365,7 @@ public class InLevel2 : FSMState
 
         // TODO: create instance if not exist
         GameObject prefab = Manager.Instance.EntityPrefabsByKey[key].gameObject;
-        EntityBase eb = GameObject.Instantiate(prefab).GetComponent<EntityBase>(); 
+        EntityBase eb = GameObject.Instantiate(prefab, Manager.Instance.EntitiesLayer).GetComponent<EntityBase>(); 
         _entityInstances.Add(eb.GetKey(), eb);
         return eb;
     }
