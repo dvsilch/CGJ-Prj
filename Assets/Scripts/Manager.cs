@@ -352,7 +352,7 @@ public class InLevel2 : FSMState
 
     public override void Run()
     {
-        if (Application.isEditor && Input.GetKey(KeyCode.R))
+        if (Application.isEditor && Input.GetKeyUp(KeyCode.R))
         {
             Restart();
         }
