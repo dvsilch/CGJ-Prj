@@ -10,15 +10,18 @@ public class StandaloneAnim : MonoBehaviour
 
     SerializableDictionary<string, GameObject> _instances = new SerializableDictionary<string, GameObject>();
 
-    public void Play(string key)
+    public float Play(string key)
     {
         if(!AnimationClipSet.ContainsKey(key))
         {
             Debug.LogError("failed to fetch fx prefab with key" + key);
-            return;
+            return 0f;
         }
         GameObject fx_go = Instantiate(AnimationClipSet[key]);
         _instances.Add(key, fx_go);
+        fx_go.GetComponent<Animation>().Play();
+        float duration = fx_go.GetComponent<Animation>().clip.length;
+        return duration;
     }
 
     public void Despawn(string key)

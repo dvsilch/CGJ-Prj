@@ -35,9 +35,11 @@ public class EntityBase : MonoBehaviour, IEntity
 
     int _currLevel = 1;
 
+    bool _canGrowthWhenSmallThanCap = true;
+
     bool CanLevelUp(Dictionary<string, IEntity> currMembers)
     {
-        if(_currLevel < Setup.LevelSelfIncCap)
+        if(_currLevel < Setup.LevelSelfIncCap && _canGrowthWhenSmallThanCap)
             return true;
         bool conditionSatisfied = true;
         bool foundKey = false;
@@ -88,6 +90,30 @@ public class EntityBase : MonoBehaviour, IEntity
         return false;
     }
 
+    public Sequence UpdateForce(int newValue, bool disableGrowth = false)
+    {
+        _currLevel = newValue;
+        if(disableGrowth)
+        {
+            _canGrowthWhenSmallThanCap = disableGrowth;
+        }
+
+        Sequence s = DOTween.Sequence();
+        for(int i=transitionDatas.Count-1;i>=0;i--)
+        {
+            if(i > newValue)
+            {
+                s.Append(transitionDatas[i].model.transform.DOScale(0.0f, 0.5f))
+                    .OnComplete(()=>{
+                        transitionDatas[i].model.transform.localScale = Vector3.one;
+                        transitionDatas[i].model.SetActive(false);
+                    });
+            }
+        }
+        s.Play();
+        return s;
+    }
+
     public async UniTask PlayLevelUpAnimation(CancellationToken cancellationToken)
     {
         if (transitionDatas == null || transitionDatas.Count <= _currLevel - 1)
@@ -121,4 +147,5 @@ public interface IEntity
     public int GetLevel();
     public bool LevelUp(Dictionary<string, IEntity> currMember);      // return true if increased
     public UniTask PlayLevelUpAnimation(CancellationToken cancellationToken);
+    public Sequence UpdateForce(int newLevel, bool disableGrowth);
 }

@@ -277,7 +277,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 620bb3ecf6cc6a84dbb8148eda3e0075, type: 3}
       propertyPath: m_Name
-      value: Meteorite
+      value: Meteorite_failed
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 620bb3ecf6cc6a84dbb8148eda3e0075, type: 3}
       propertyPath: m_Layer
@@ -322,9 +322,10 @@ Animation:
   m_GameObject: {fileID: 7677787248156216326}
   m_Enabled: 1
   serializedVersion: 3
-  m_Animation: {fileID: 0}
+  m_Animation: {fileID: 7400000, guid: dd29162a8f0b35147b65396d90d9339e, type: 2}
   m_Animations:
   - {fileID: 7400000, guid: b56c7cf67c1d58b4aa1b21692369f424, type: 2}
+  - {fileID: 7400000, guid: dd29162a8f0b35147b65396d90d9339e, type: 2}
   m_WrapMode: 0
   m_PlayAutomatically: 0
   m_AnimatePhysics: 0
