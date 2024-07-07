@@ -311,7 +311,7 @@ public class InLevel2 : FSMState
         foreach(EntityButton btn in UIMain.Instance.Entities.Buttons)
         {
             if (btn.isReigistered) return;
-            btn.OnEntityClick += async (so)=>{
+            btn.OnEntityClick += async (so, rt)=>{
                 IEntity e = GetOrCreateEntity(so.Key);
 
                 LvUpCompleted = false;
