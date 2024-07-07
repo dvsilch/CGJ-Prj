@@ -50,7 +50,7 @@ MonoBehaviour:
   Setup: {fileID: 11400000, guid: 5cf67ff6f1e1e6e499d87256463dac2f, type: 2}
   transitionDatas:
   - type: 2
-    model: {fileID: 0}
+    model: {fileID: 3176459148041382556}
     initialScale: 0
     scale: 1
     duration: 3
@@ -233,6 +233,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 61626f8fd04108c448c6fd1ec2ab9abe, type: 3}
       propertyPath: m_Name
       value: Farm
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 61626f8fd04108c448c6fd1ec2ab9abe, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:

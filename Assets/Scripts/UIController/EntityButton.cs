@@ -126,21 +126,26 @@ public class EntityButton : MonoBehaviour
 
     private void HoverBtnFx()
     {
+        string txt = "";
+        DOTween.To(() => txt, x => txt = x, entityConfig.EntityDescription, entityConfig.EntityDescription.Length / 15f).OnUpdate(() =>
+        {
+            entityDescription.text = txt;
+        });
         hoverSequence = DOTween.Sequence()
-            .Append(transform.DOScale(1.2f, 0.1f))
-            .Append(transform.DOScale(1.0f, 0.1f));
+            .Append(button.targetGraphic.transform.DOScale(1.2f, 0.1f))
+            .Append(button.targetGraphic.transform.DOScale(1.0f, 0.1f));
     }
 
     private void ExitBtnFx()
     {
         hoverSequence?.Kill();
-        transform.localScale = Vector3.one;
+        button.targetGraphic.transform.localScale = Vector3.one;
     }
 
     private void PressBtnFx()
     {
         hoverSequence?.Kill();
-        transform.DOPunchScale(Vector2.one * 1.2f, 0.2f, 3);
+        button.targetGraphic.transform.DOPunchScale(Vector2.one * 1.2f, 0.2f, 3);
         Manager.Instance.PlayAudio("ButtonClick");
     }
 }

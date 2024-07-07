@@ -7,8 +7,6 @@ using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using ProjectTools;
-using Sirenix.OdinInspector.Editor;
-using UnityEditor.EditorTools;
 using UnityEngine;
 //using UnityEngine.Rendering;
 using UnityEngine.TestTools;
@@ -18,7 +16,7 @@ public class EntityQueueWatcher : MonoBehaviour
     // [SerializeField]
     // TurnConfigSO _turnCfg;
 
-	[SerializeField, Tooltip("结算时判定条件的设定")]
+    [SerializeField, Tooltip("结算时判定条件的设定")]
     SerializableDictionary<int, WinCheck> _checkRules;
 
     [SerializeField, Tooltip("结算回合")]
@@ -32,6 +30,10 @@ public class EntityQueueWatcher : MonoBehaviour
 
     List<IEntity> _member_to_play_lvup = new List<IEntity>();
 
+    public bool win = false;
+
+    public string ResultText => _currUserInput.Values.Select(i => $"{(i as EntityBase).Setup.EntityName} Lv.{i.GetLevel()}").Aggregate((pre, next) => $"{pre} {next}");
+
     public async UniTask NewMemeber(IEntity entity, CancellationToken cancellationToken = default)
     {
         Debug.Assert(!_currUserInput.ContainsKey(entity.GetKey()), string.Format("memmber key {0} already exist", entity.GetKey()));
@@ -43,7 +45,7 @@ public class EntityQueueWatcher : MonoBehaviour
         // _currMembers.Add(entity);
         _last = entity;
 
-		// 已有成员成长，包括自增
+        // 已有成员成长，包括自增
         _member_to_play_lvup.Clear();
         CheckMember();
 
@@ -53,7 +55,7 @@ public class EntityQueueWatcher : MonoBehaviour
         _currTurn++;
 
         // 检查当前回合是否有pass check
-        if(_checkRules.ContainsKey(_currTurn))
+        if (_checkRules.ContainsKey(_currTurn))
         {
             // 回合判定
             bool passed = _checkRules[_currTurn].Check(_currUserInput);
@@ -79,11 +81,22 @@ public class EntityQueueWatcher : MonoBehaviour
             }
 
             // 最终回合
-            if(_currTurn == TurnEnd)
+            if (_currTurn == TurnEnd)
             {
                 // 最终回合需要的表现和跳转
                 // await Manager.Instance.DoPlaySuccess();
+                UIMain.Instance.ShowGameOver(ResultText);
+                return;
             }
+        }
+
+        if (_currTurn == TurnEnd)
+        {
+            // 最终回合需要的表现和跳转
+            // await Manager.Instance.DoPlaySuccess();
+            //Manager.Instance.FSM.ChangeState("game over");
+            UIMain.Instance.ShowGameOver(ResultText);
+
         }
     }
 
@@ -95,7 +108,7 @@ public class EntityQueueWatcher : MonoBehaviour
 
     private async UniTask PlayMemberLvUp(CancellationToken cancellationToken = default)
     {
-        foreach(IEntity e in _member_to_play_lvup)
+        foreach (IEntity e in _member_to_play_lvup)
         {
             // other fx?
             Debug.Log("play other fx lvup related? 1 sec");
@@ -113,9 +126,10 @@ public class EntityQueueWatcher : MonoBehaviour
         _currTurn = 0;
     }
 
-	// member level increase if possible
+    // member level increase if possible
     // member level increase beyond limit
-    void CheckMember(){
+    void CheckMember()
+    {
         // IEntity lastOne = _last;
         // IEntity prevOneBefore = _currUserInput[_currUserInput.Count - 2];
 
@@ -129,12 +143,12 @@ public class EntityQueueWatcher : MonoBehaviour
         //         throw new Exception("invalid");
         // }
 
-        foreach(IEntity e in _currUserInput.Values)
+        foreach (IEntity e in _currUserInput.Values)
         {
-            if(e == _last)
-                continue;
+            //if(e == _last)
+            //    continue;
             bool lvUpSuccess = e.LevelUp(_currUserInput);
-            if(lvUpSuccess)
+            if (lvUpSuccess)
             {
                 _member_to_play_lvup.Add(e);
             }
@@ -150,10 +164,10 @@ public class EntityQueueWatcher : MonoBehaviour
         await e.PlayLevelUpAnimation(cancellationToken).AttachExternalCancellation(cancellationToken);
     }
 
-//     string DoRelationCheck(IEntity left, IEntity right)
-//     {
-//         return string.Format("{0}2{1}", left.GetKey() , right.GetKey());
-//     }
+    //     string DoRelationCheck(IEntity left, IEntity right)
+    //     {
+    //         return string.Format("{0}2{1}", left.GetKey() , right.GetKey());
+    //     }
 }
 
 [System.Serializable]

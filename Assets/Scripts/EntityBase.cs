@@ -28,12 +28,12 @@ public class EntityBase : MonoBehaviour, IEntity
     }
 
     [SerializeField]
-    EntityConfigSO Setup;
+    public EntityConfigSO Setup;
 
     [SerializeField]
     private List<TransitionData> transitionDatas;
 
-    int _currLevel = 1;
+    int _currLevel = 0;
 
     bool _canGrowthWhenSmallThanCap = true;
 
@@ -116,6 +116,18 @@ public class EntityBase : MonoBehaviour, IEntity
 
     public async UniTask PlayLevelUpAnimation(CancellationToken cancellationToken)
     {
+        if (Setup.Key == "D")
+        {
+            foreach (Transform child in transform)
+            {
+                child.gameObject.SetActive(true);
+                var originScale = child.localScale;
+                child.localScale = Vector3.zero;
+                await child.DOScale(originScale, 1f).ToUniTask(cancellationToken: cancellationToken);
+            }
+            return;
+        }
+
         if (transitionDatas == null || transitionDatas.Count <= _currLevel - 1)
             return;
 

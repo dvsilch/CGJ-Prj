@@ -129,6 +129,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: red_alert_2_-_allied_prism_tower
       objectReference: {fileID: 0}
+    - target: {fileID: 7571229051512875185, guid: e7f0684a453e3f1459102bff29492d94, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

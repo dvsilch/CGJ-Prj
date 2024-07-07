@@ -26,9 +26,6 @@ public class ButtonsGroup : MonoBehaviour
     [SerializeField]
     private List<EntityConfigSO> clickedEntities = new List<EntityConfigSO>(5);
 
-    Tween _typeWriterTween;
-    float _typeSpeed = 15f;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -45,12 +42,6 @@ public class ButtonsGroup : MonoBehaviour
         entityName.text = entityConfig.EntityName;
         // entityDescription.text = entityConfig.EntityDescription;
         entityIcon.sprite = entityConfig.EntityIcon;
-
-        string txt = "";
-
-        _typeWriterTween = DOTween.To(()=>txt, x => txt = x, entityConfig.EntityDescription, entityConfig.EntityDescription.Length / _typeSpeed).OnUpdate(()=>{
-            entityDescription.text = txt;
-        });
     }
 
     private void OnEntityPointerExit(EntityConfigSO entityConfig)

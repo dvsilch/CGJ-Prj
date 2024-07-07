@@ -19,6 +19,10 @@ public class UIMain : MonoBehaviour
 
     public TextMeshProUGUI DebugText;
 
+    public GameObject gameoverModal;
+
+    public TMPro.TextMeshProUGUI gameoverText;
+
     private void Awake() {
         _instance = this;
     }
@@ -35,5 +39,16 @@ public class UIMain : MonoBehaviour
     public void ShowDebug(string s)
     {
         DebugText.text += s + "\n";
+    }
+
+    public void ShowGameOver(string text)
+    {
+        gameoverModal.SetActive(true);
+        gameoverText.text = text;
+    }
+
+    public void HideGameOver()
+    {
+        gameoverModal.SetActive(false);
     }
 }
