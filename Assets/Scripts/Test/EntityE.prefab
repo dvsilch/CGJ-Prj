@@ -29,7 +29,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1634099992743808834}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8010844411053615184
@@ -45,3 +46,66 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Setup: {fileID: 11400000, guid: d05a379667d0b5e47a00b3d3fe3752f5, type: 2}
+  transitionDatas: []
+--- !u!1001 &8427577753608142153
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 2863563163040456835}
+    m_Modifications:
+    - target: {fileID: 7086897909550723595, guid: e7f0684a453e3f1459102bff29492d94, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 3.38
+      objectReference: {fileID: 0}
+    - target: {fileID: 7086897909550723595, guid: e7f0684a453e3f1459102bff29492d94, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 3.52
+      objectReference: {fileID: 0}
+    - target: {fileID: 7086897909550723595, guid: e7f0684a453e3f1459102bff29492d94, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.24
+      objectReference: {fileID: 0}
+    - target: {fileID: 7086897909550723595, guid: e7f0684a453e3f1459102bff29492d94, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.08189182
+      objectReference: {fileID: 0}
+    - target: {fileID: 7086897909550723595, guid: e7f0684a453e3f1459102bff29492d94, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.92460674
+      objectReference: {fileID: 0}
+    - target: {fileID: 7086897909550723595, guid: e7f0684a453e3f1459102bff29492d94, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.37056583
+      objectReference: {fileID: 0}
+    - target: {fileID: 7086897909550723595, guid: e7f0684a453e3f1459102bff29492d94, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.03282078
+      objectReference: {fileID: 0}
+    - target: {fileID: 7086897909550723595, guid: e7f0684a453e3f1459102bff29492d94, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 7.303
+      objectReference: {fileID: 0}
+    - target: {fileID: 7086897909550723595, guid: e7f0684a453e3f1459102bff29492d94, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -172.971
+      objectReference: {fileID: 0}
+    - target: {fileID: 7086897909550723595, guid: e7f0684a453e3f1459102bff29492d94, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -135.871
+      objectReference: {fileID: 0}
+    - target: {fileID: 7571229051512875185, guid: e7f0684a453e3f1459102bff29492d94, type: 3}
+      propertyPath: m_Name
+      value: red_alert_2_-_allied_prism_tower
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: e7f0684a453e3f1459102bff29492d94, type: 3}
+--- !u!4 &1634099992743808834 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7086897909550723595, guid: e7f0684a453e3f1459102bff29492d94, type: 3}
+  m_PrefabInstance: {fileID: 8427577753608142153}
+  m_PrefabAsset: {fileID: 0}
