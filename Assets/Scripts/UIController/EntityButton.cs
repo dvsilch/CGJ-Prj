@@ -141,5 +141,6 @@ public class EntityButton : MonoBehaviour
     {
         hoverSequence?.Kill();
         transform.DOPunchScale(Vector2.one * 1.2f, 0.2f, 3);
+        Manager.Instance.PlayAudio("ButtonClick");
     }
 }
