@@ -48,7 +48,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Setup: {fileID: 11400000, guid: 42df075db7a85c14bb34398964bfe7ef, type: 2}
-  transitionDatas: []
+  transitionDatas:
+  - type: 2
+    model: {fileID: 252857902553452795}
+    initialScale: 0
+    scale: 1
+    duration: 3
+  - type: 2
+    model: {fileID: 9028648304305932138}
+    initialScale: 0
+    scale: 0.8
+    duration: 2
+  - type: 2
+    model: {fileID: 5308097847259742025}
+    initialScale: 0
+    scale: 0.6
+    duration: 2
 --- !u!1001 &991669859984805869
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -60,6 +75,10 @@ PrefabInstance:
     - target: {fileID: 1027184206687657750, guid: 5aee1d1a318a8f6459ff4c8ec08b55ce, type: 3}
       propertyPath: m_Name
       value: bulldozer
+      objectReference: {fileID: 0}
+    - target: {fileID: 1027184206687657750, guid: 5aee1d1a318a8f6459ff4c8ec08b55ce, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1027184206687879990, guid: 5aee1d1a318a8f6459ff4c8ec08b55ce, type: 3}
       propertyPath: m_LocalScale.x
@@ -159,6 +178,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: scifi-buggy
       objectReference: {fileID: 0}
+    - target: {fileID: 3776317344215860845, guid: 3267fb4782f8c5041882e26aa8ba44b3, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3776317344216095309, guid: 3267fb4782f8c5041882e26aa8ba44b3, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1.99
@@ -207,6 +230,11 @@ PrefabInstance:
 --- !u!4 &9028648304305576778 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3776317344216095309, guid: 3267fb4782f8c5041882e26aa8ba44b3, type: 3}
+  m_PrefabInstance: {fileID: 5270371900461449479}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &9028648304305932138 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3776317344215860845, guid: 3267fb4782f8c5041882e26aa8ba44b3, type: 3}
   m_PrefabInstance: {fileID: 5270371900461449479}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8363584304632542868
@@ -261,6 +289,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: scifi-ranger
       objectReference: {fileID: 0}
+    - target: {fileID: 4448234005980580317, guid: deb75a8206ba8e0448e4665a6e8a4695, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -269,5 +301,10 @@ PrefabInstance:
 --- !u!4 &4819404048977290739 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3958837718640317287, guid: deb75a8206ba8e0448e4665a6e8a4695, type: 3}
+  m_PrefabInstance: {fileID: 8363584304632542868}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &5308097847259742025 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4448234005980580317, guid: deb75a8206ba8e0448e4665a6e8a4695, type: 3}
   m_PrefabInstance: {fileID: 8363584304632542868}
   m_PrefabAsset: {fileID: 0}

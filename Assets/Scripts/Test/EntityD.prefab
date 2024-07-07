@@ -50,7 +50,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Setup: {fileID: 11400000, guid: b4b6a5ee95d08b04089fd79c2853ea56, type: 2}
-  transitionDatas: []
+  transitionDatas:
+  - type: 2
+    model: {fileID: 0}
+    initialScale: 0
+    scale: 1
+    duration: 1
 --- !u!1001 &1121646473137186762
 PrefabInstance:
   m_ObjectHideFlags: 0
