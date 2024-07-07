@@ -29,16 +29,16 @@ public class ButtonsGroup : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        foreach (var button in buttons)
-        {
-            button.OnEntityPointerEnter += OnEntityPointerEnter;
-            button.OnEntityPointerExit += OnEntityPointerExit;
-        }
+        //foreach (var button in buttons)
+        //{
+        //    button.OnEntityPointerEnter += OnEntityPointerEnter;
+        //    button.OnEntityPointerExit += OnEntityPointerExit;
+        //}
     }
 
     private void OnEntityPointerEnter(EntityConfigSO entityConfig)
     {
-        tip.gameObject.SetActive(true);
+        //tip.gameObject.SetActive(true);
         entityName.text = entityConfig.EntityName;
         entityDescription.text = entityConfig.EntityDescription;
         entityIcon.sprite = entityConfig.EntityIcon;
@@ -46,7 +46,7 @@ public class ButtonsGroup : MonoBehaviour
 
     private void OnEntityPointerExit(EntityConfigSO entityConfig)
     {
-        tip.gameObject.SetActive(false);
+        //tip.gameObject.SetActive(false);
         entityName.text = "";
         entityDescription.text = "";
         entityIcon.sprite = null;
