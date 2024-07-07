@@ -26,6 +26,18 @@ public class EntityButton : MonoBehaviour
     [SerializeField]
     private GameObject suffixContainer;
 
+    [SerializeField]
+    private Image entityIcon2;
+
+    [SerializeField]
+    private TMPro.TextMeshProUGUI entityName;
+
+    [SerializeField]
+    private TMPro.TextMeshProUGUI entityDescription;
+
+    [SerializeField]
+    private RectTransform tip;
+
     public bool IsClicked { get; private set; } = false;
 
     public event Action<EntityConfigSO> OnEntityPointerEnter;
@@ -59,6 +71,14 @@ public class EntityButton : MonoBehaviour
         button.onClick.AddListener(OnClick);
 
         entityIcon.sprite = entityConfig.EntityIcon;
+
+        tip.gameObject.SetActive(true);
+        entityName.text = entityConfig.EntityName;
+        entityDescription.text = entityConfig.EntityDescription;
+        entityIcon2.sprite = entityConfig.EntityIcon;
+        LayoutRebuilder.ForceRebuildLayoutImmediate(tip);
+        tip.anchoredPosition = new Vector2(tip.anchoredPosition.x, tip.rect.height);
+        tip.gameObject.SetActive(false);
 
         Restart();
     }
