@@ -25,6 +25,11 @@ public class UIMain : MonoBehaviour
 
     private void Start() {
         DebugText.text = "";
+#if UNITY_EDITOR
+        DebugText.gameObject.SetActive(true);
+#else
+        DebugText.gameObject.SetActive(false);
+#endif
     }
 
     public void ShowDebug(string s)
