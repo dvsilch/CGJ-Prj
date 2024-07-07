@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: eb39a45e2b36bf949b6ca87b0efd5e30, type: 3}
-  m_Name: EntityConfigSO
+  m_Name: EntityConfigSO 0
   m_EditorClassIdentifier: 
-  entityName: sfashsjgjd
-  entityDescription: sdssssssss
-  entityIcon: {fileID: 0}
+  entityName: Name 0
+  entityDescription: Desc 0
+  entityIcon: {fileID: -1280221349, guid: 7dd72dc1ed1e0fe4c85629a4da97297e, type: 3}
   LevelSelfIncCap: 3
   Key: A
   LvUpCondition:
