@@ -114,7 +114,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1044488853088208399
 Transform:
   m_ObjectHideFlags: 0
@@ -437,22 +437,27 @@ MonoBehaviour:
   transitionDatas:
   - type: 3
     model: {fileID: 3200561318691770233}
+    initialScale: 0
     scale: 0.2
-    duration: 2
+    duration: 3
   - type: 3
     model: {fileID: 5483807925110039990}
+    initialScale: 0
     scale: 0.15
     duration: 2
   - type: 2
     model: {fileID: 814890882643522931}
+    initialScale: 0
     scale: 0.15
     duration: 2
   - type: 2
     model: {fileID: 1580804336457218736}
+    initialScale: 0
     scale: 0.2
     duration: 2
   - type: 2
     model: {fileID: 5300278396691582033}
+    initialScale: 0
     scale: 0.2
     duration: 2
 --- !u!1001 &1815316764685289441
