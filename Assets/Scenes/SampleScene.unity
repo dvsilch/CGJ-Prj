@@ -244,6 +244,7 @@ MonoBehaviour:
   - {fileID: 8010844411053615184, guid: f8b4c77ce74ccea478c62aa6f4b1a195, type: 3}
   - {fileID: 8010844411053615184, guid: c38c178c4d5d5bc41be2873b05160fe6, type: 3}
   - {fileID: 8010844411053615184, guid: 88cf0e374fe6b844da13203f2a0c317a, type: 3}
+  entitiesLayer: {fileID: 1035102383}
 --- !u!114 &324210367
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -479,6 +480,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &1035102383 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3441784949359723957, guid: c4be55d0ad5d7c04c82471c9412a1f38, type: 3}
+  m_PrefabInstance: {fileID: 4407273235727502883}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4407273235727502883
 PrefabInstance:
   m_ObjectHideFlags: 0
