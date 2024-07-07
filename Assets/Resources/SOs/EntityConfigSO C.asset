@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb39a45e2b36bf949b6ca87b0efd5e30, type: 3}
   m_Name: EntityConfigSO C
   m_EditorClassIdentifier: 
-  entityName: Name 2
-  entityDescription: Desc 2
+  entityName: "\u5F00\u53D1\u8D44\u6E90"
+  entityDescription: "\u83B7\u53D6\u5FC5\u8981\u7684\u7269\u8D44\u548C\u80FD\u6E90\uFF0C\u652F\u6301\u8FDB\u4E00\u6B65\u5EFA\u8BBE\u3002"
   entityIcon: {fileID: 27884809, guid: 7dd72dc1ed1e0fe4c85629a4da97297e, type: 3}
   LevelSelfIncCap: 3
   Key: C

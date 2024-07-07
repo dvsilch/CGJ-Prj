@@ -12,10 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb39a45e2b36bf949b6ca87b0efd5e30, type: 3}
   m_Name: EntityConfigSO A
   m_EditorClassIdentifier: 
-  entityName: Name 0
-  entityDescription: Desc 0
+  entityName: "\u5EFA\u8BBE\u57FA\u5730"
+  entityDescription: " \u63D0\u4F9B\u57FA\u672C\u7684\u5C45\u4F4F\u548C\u5DE5\u4F5C\u573A\u6240"
   entityIcon: {fileID: -1280221349, guid: 7dd72dc1ed1e0fe4c85629a4da97297e, type: 3}
-  LevelSelfIncCap: 3
+  LevelSelfIncCap: 4
   Key: A
   LvUpCondition:
-    dictionaryList: []
+    dictionaryList:
+    - Key: C
+      Value:
+        CheckEntityLevel: 3
+        BuffVal: 1
+      index: 0
+      isKeyDuplicated: 0
