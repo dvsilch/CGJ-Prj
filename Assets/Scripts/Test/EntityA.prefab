@@ -49,7 +49,7 @@ MonoBehaviour:
   - type: 3
     model: {fileID: 6533083475513484234}
     scale: 1
-    duration: 1
+    duration: 5
   - type: 1
     model: {fileID: 6533083475513484234}
     scale: 1
