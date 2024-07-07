@@ -109,8 +109,8 @@ public class EntityQueueWatcher : MonoBehaviour
 
         foreach(IEntity e in _currUserInput.Values)
         {
-            if(e == _last)
-                continue;
+            //if(e == _last)
+            //    continue;
             bool lvUpSuccess = e.LevelUp(_currUserInput);
             if(lvUpSuccess)
             {
