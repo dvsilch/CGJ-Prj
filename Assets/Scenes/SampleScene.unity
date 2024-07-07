@@ -258,7 +258,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _checkRules:
-    dictionaryList: []
+    dictionaryList:
+    - Key: 4
+      Value:
+        Condition:
+          m_Keys:
+          - A
+          m_Values: 04000000
+      index: 0
+      isKeyDuplicated: 0
   TurnEnd: 8
   _currTurn: 0
 --- !u!1 &519420028
