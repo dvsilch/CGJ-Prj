@@ -75,10 +75,10 @@ public class EntityQueueWatcher : MonoBehaviour
     {
         foreach(IEntity e in _member_to_play_lvup)
         {
-            await PlayLvUpShow(e, cancellationToken);
             // other fx?
             Debug.Log("play other fx lvup related? 1 sec");
-            await UniTask.WaitForSeconds(1.0f, cancellationToken: cancellationToken);
+            await UniTask.WhenAll(UniTask.WaitForSeconds(1.0f, cancellationToken: cancellationToken), PlayLvUpShow(e, cancellationToken))
+                .AttachExternalCancellation(cancellationToken);
         }
     }
 
