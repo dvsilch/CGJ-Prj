@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -27,13 +28,15 @@ public class EntityButton : MonoBehaviour
 
     public bool IsClicked { get; private set; } = false;
 
-    public event Action<EntityConfigSO, RectTransform> OnEntityPointerEnter;
+    public event Action<EntityConfigSO> OnEntityPointerEnter;
 
-    public event Action<EntityConfigSO, RectTransform> OnEntityPointerExit;
+    public event Action<EntityConfigSO> OnEntityPointerExit;
 
-    public event Action<EntityConfigSO, RectTransform> OnEntityClick;
+    public event Action<EntityConfigSO> OnEntityClick;
 
     public bool isReigistered;
+
+    private Sequence hoverSequence;
 
     // Start is called before the first frame update
     void Start()
@@ -64,10 +67,11 @@ public class EntityButton : MonoBehaviour
     {
         if (Manager.Instance.FSM.CurrentState is InLevel2 level && level.LvUpCompleted)
         {
+            PressBtnFx();
             IsClicked = true;
             suffix.text = (Manager.Instance.Watcher._currTurn + 1).ToString();
             suffixContainer.SetActive(true);
-            OnEntityClick?.Invoke(entityConfig, button.GetComponent<RectTransform>());
+            OnEntityClick?.Invoke(entityConfig);
             button.interactable = false;
         }
     }
@@ -87,11 +91,33 @@ public class EntityButton : MonoBehaviour
 
     private void OnPointerEnter(BaseEventData eventData)
     {
-        OnEntityPointerEnter?.Invoke(entityConfig, button.GetComponent<RectTransform>());
+        if (!IsClicked)
+            HoverBtnFx();
+        OnEntityPointerEnter?.Invoke(entityConfig);
     }
 
     private void OnPointerExit(BaseEventData eventData)
     {
-        OnEntityPointerExit?.Invoke(entityConfig, button.GetComponent<RectTransform>());
+        ExitBtnFx();
+        OnEntityPointerExit?.Invoke(entityConfig);
+    }
+
+    private void HoverBtnFx()
+    {
+        hoverSequence = DOTween.Sequence()
+            .Append(transform.DOScale(1.2f, 0.1f))
+            .Append(transform.DOScale(1.0f, 0.1f));
+    }
+
+    private void ExitBtnFx()
+    {
+        hoverSequence?.Kill();
+        transform.localScale = Vector3.one;
+    }
+
+    private void PressBtnFx()
+    {
+        hoverSequence?.Kill();
+        transform.DOPunchScale(Vector2.one * 1.2f, 0.2f, 3);
     }
 }
