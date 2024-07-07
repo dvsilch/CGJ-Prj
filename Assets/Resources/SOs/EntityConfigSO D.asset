@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: eb39a45e2b36bf949b6ca87b0efd5e30, type: 3}
-  m_Name: EntityConfigSO 2
+  m_Name: EntityConfigSO D
   m_EditorClassIdentifier: 
-  entityName: Name 2
-  entityDescription: Desc 2
-  entityIcon: {fileID: 27884809, guid: 7dd72dc1ed1e0fe4c85629a4da97297e, type: 3}
+  entityName: Name 3
+  entityDescription: Desc 3
+  entityIcon: {fileID: 1466206679, guid: 7dd72dc1ed1e0fe4c85629a4da97297e, type: 3}
   LevelSelfIncCap: 3
-  Key: C
+  Key: D
   LvUpCondition:
     dictionaryList: []
