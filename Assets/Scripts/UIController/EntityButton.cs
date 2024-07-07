@@ -27,11 +27,11 @@ public class EntityButton : MonoBehaviour
 
     public bool IsClicked { get; private set; } = false;
 
-    public event Action<EntityConfigSO> OnEntityPointerEnter;
+    public event Action<EntityConfigSO, RectTransform> OnEntityPointerEnter;
 
-    public event Action<EntityConfigSO> OnEntityPointerExit;
+    public event Action<EntityConfigSO, RectTransform> OnEntityPointerExit;
 
-    public event Action<EntityConfigSO> OnEntityClick;
+    public event Action<EntityConfigSO, RectTransform> OnEntityClick;
 
     public bool isReigistered;
 
@@ -67,7 +67,7 @@ public class EntityButton : MonoBehaviour
             IsClicked = true;
             suffix.text = (Manager.Instance.Watcher._currTurn + 1).ToString();
             suffixContainer.SetActive(true);
-            OnEntityClick?.Invoke(entityConfig);
+            OnEntityClick?.Invoke(entityConfig, button.GetComponent<RectTransform>());
             button.interactable = false;
         }
     }
@@ -87,11 +87,11 @@ public class EntityButton : MonoBehaviour
 
     private void OnPointerEnter(BaseEventData eventData)
     {
-        OnEntityPointerEnter?.Invoke(entityConfig);
+        OnEntityPointerEnter?.Invoke(entityConfig, button.GetComponent<RectTransform>());
     }
 
     private void OnPointerExit(BaseEventData eventData)
     {
-        OnEntityPointerExit?.Invoke(entityConfig);
+        OnEntityPointerExit?.Invoke(entityConfig, button.GetComponent<RectTransform>());
     }
 }
