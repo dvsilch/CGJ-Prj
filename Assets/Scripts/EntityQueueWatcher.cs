@@ -149,7 +149,7 @@ public class WinCheck
     {
         foreach(IEntity e in entities)
         {
-            Debug.Assert(Condition.ContainsKey(e.GetKey()), string.Format("entity key {0} not included in winning condition set"));
+            Debug.Assert(Condition.ContainsKey(e.GetKey()), string.Format("entity key {0} not included in winning condition set", e.GetKey()));
             if(e.GetLevel() < Condition[e.GetKey()])
                 return false;
         }
