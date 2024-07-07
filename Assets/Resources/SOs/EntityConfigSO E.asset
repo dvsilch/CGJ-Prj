@@ -15,7 +15,13 @@ MonoBehaviour:
   entityName: "\u53D1\u5C55\u519B\u5907"
   entityDescription: "\u4FDD\u969C\u57FA\u5730\u7684\u5B89\u5168\uFF0C\u9632\u6B62\u5916\u90E8\u5A01\u80C1\u3002"
   entityIcon: {fileID: 21300000, guid: b903505a46e6e674ba812f8a630358e2, type: 3}
-  LevelSelfIncCap: 3
+  LevelSelfIncCap: 1
   Key: E
   LvUpCondition:
-    dictionaryList: []
+    dictionaryList:
+    - Key: D
+      Value:
+        CheckEntityLevel: 1
+        BuffVal: 1
+      index: 0
+      isKeyDuplicated: 0
