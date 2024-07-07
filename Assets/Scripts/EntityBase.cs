@@ -28,7 +28,7 @@ public class EntityBase : MonoBehaviour, IEntity
     }
 
     [SerializeField]
-    EntityConfigSO Setup;
+    public EntityConfigSO Setup;
 
     [SerializeField]
     private List<TransitionData> transitionDatas;
