@@ -10,7 +10,6 @@ public class EntityBase : MonoBehaviour, IEntity
     [System.Flags]
     public enum TransitionType
     {
-        ModelShow = 1 << 0,
         ModelScale = 1 << 1,
     }
 
@@ -20,6 +19,8 @@ public class EntityBase : MonoBehaviour, IEntity
         public TransitionType type = TransitionType.ModelScale;
 
         public GameObject model;
+
+        public float initialScale = 0f;
 
         public float scale = 1f;
 
@@ -101,13 +102,10 @@ public class EntityBase : MonoBehaviour, IEntity
             return;
         }
 
-        if (data.type.HasFlag(TransitionType.ModelShow))
-        {
-            data.model.SetActive(true);
-        }
-
+        data.model.SetActive(true);
         if (data.type.HasFlag(TransitionType.ModelScale))
         {
+            data.model.transform.localScale = Vector3.one * data.initialScale;
             await data.model.transform.DOScale(data.scale, data.duration).ToUniTask(cancellationToken: cancellationToken);
 
             UIMain.Instance.ShowDebug("level up animation done");

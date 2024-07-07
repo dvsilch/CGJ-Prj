@@ -316,7 +316,7 @@ public class InLevel2 : FSMState
         foreach(EntityButton btn in UIMain.Instance.Entities.Buttons)
         {
             if (btn.isReigistered) return;
-            btn.OnEntityClick += async (so, rt)=>{
+            btn.OnEntityClick += async (so)=>{
                 IEntity e = GetOrCreateEntity(so.Key);
 
                 LvUpCompleted = false;
@@ -352,7 +352,7 @@ public class InLevel2 : FSMState
 
     public override void Run()
     {
-        if (Application.isEditor && Input.GetKey(KeyCode.R))
+        if (Application.isEditor && Input.GetKeyUp(KeyCode.R))
         {
             Restart();
         }

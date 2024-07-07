@@ -21,6 +21,9 @@ public class ButtonsGroup : MonoBehaviour
     private TMPro.TextMeshProUGUI entityDescription;
 
     [SerializeField]
+    private RectTransform tip;
+
+    [SerializeField]
     private List<EntityConfigSO> clickedEntities = new List<EntityConfigSO>(5);
 
     Tween _typeWriterTween;
@@ -29,18 +32,16 @@ public class ButtonsGroup : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        foreach (var button in buttons)
-        {
-            button.OnEntityPointerEnter += OnEntityPointerEnter;
-            button.OnEntityPointerEnter += HoverBtnFx;
-            button.OnEntityPointerExit += OnEntityPointerExit;
-            button.OnEntityPointerExit += ExitBtnFx;
-            button.OnEntityClick += PressedBtnFx;
-        }
+        //foreach (var button in buttons)
+        //{
+        //    button.OnEntityPointerEnter += OnEntityPointerEnter;
+        //    button.OnEntityPointerExit += OnEntityPointerExit;
+        //}
     }
 
-    private void OnEntityPointerEnter(EntityConfigSO entityConfig, RectTransform rt)
+    private void OnEntityPointerEnter(EntityConfigSO entityConfig)
     {
+        //tip.gameObject.SetActive(true);
         entityName.text = entityConfig.EntityName;
         // entityDescription.text = entityConfig.EntityDescription;
         entityIcon.sprite = entityConfig.EntityIcon;
@@ -52,24 +53,11 @@ public class ButtonsGroup : MonoBehaviour
         });
     }
 
-    private void OnEntityPointerExit(EntityConfigSO entityConfig, RectTransform rt)
+    private void OnEntityPointerExit(EntityConfigSO entityConfig)
     {
+        //tip.gameObject.SetActive(false);
         entityName.text = "";
         entityDescription.text = "";
         entityIcon.sprite = null;
-    }
-
-    void HoverBtnFx(EntityConfigSO entityCfg, RectTransform rt){
-        DOTween.Sequence()
-            .Append(rt.DOScale(Vector2.one * 1.2f, 0.1f))
-            .Append(rt.DOScale(Vector2.one, 0.1f));
-    }
-
-    void ExitBtnFx(EntityConfigSO entityCfg, RectTransform rt){
-        rt.localScale = Vector2.one;
-    }
-
-    void PressedBtnFx(EntityConfigSO entityCfg, RectTransform rt){
-        rt.DOPunchScale(Vector2.one * 1.2f, 0.2f, 3);
     }
 }

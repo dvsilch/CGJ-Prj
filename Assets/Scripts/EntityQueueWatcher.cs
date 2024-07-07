@@ -8,7 +8,7 @@ using ProjectTools;
 using Sirenix.OdinInspector.Editor;
 using UnityEditor.EditorTools;
 using UnityEngine;
-using UnityEngine.Rendering;
+//using UnityEngine.Rendering;
 using UnityEngine.TestTools;
 
 public class EntityQueueWatcher : MonoBehaviour
@@ -137,7 +137,7 @@ public class EntityQueueWatcher : MonoBehaviour
 [System.Serializable]
 public class WinCheck
 {
-    public SerializedDictionary<string, int> Condition = new SerializedDictionary<string, int>(){
+    public SerializableDictionary<string, int> Condition = new SerializableDictionary<string, int>(){
         {"A", 4},
         {"B", 4},
         {"C", 4},
@@ -149,7 +149,7 @@ public class WinCheck
     {
         foreach(IEntity e in entities)
         {
-            Debug.Assert(Condition.ContainsKey(e.GetKey()), string.Format("entity key {0} not included in winning condition set"));
+            Debug.Assert(Condition.ContainsKey(e.GetKey()), string.Format("entity key {0} not included in winning condition set", e.GetKey()));
             if(e.GetLevel() < Condition[e.GetKey()])
                 return false;
         }
